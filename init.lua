@@ -433,6 +433,7 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
 
+  angularls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
