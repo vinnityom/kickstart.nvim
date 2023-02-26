@@ -278,6 +278,7 @@ require('telescope').setup {
         ['<C-k>'] = actions.move_selection_previous,
         ['<C-u>'] = false,
         ['<C-d>'] = false,
+        ['<Esc>'] = actions.close,
       },
     },
   },
