@@ -44,6 +44,8 @@ return {
           ["o"] = "open",
           ["gw"] = "prev_git_modified",
           ["gs"] = "next_git_modified",
+          ["z"] = false,
+          ["Z"] = "close_all_nodes",
         },
       },
     }

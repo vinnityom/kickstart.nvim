@@ -532,8 +532,8 @@ bind("n", "<C-j>", "<C-w>j", opts)
 bind("n", "<C-k>", "<C-w>k", opts)
 
 -- Formatting
-bind("n", "]<leader>", "o<ESC>k", opts)
-bind("n", "[<leader>", "<S-o><ESC>j", opts)
+bind("n", "]<leader>", "o<ESC>k", { silent = true, noremap = true, desc = 'Make empty line below' })
+bind("n", "[<leader>", "<S-o><ESC>j", { silent = true, noremap = true, desc = 'Make empty line above' })
 
 -- Saving
 bind("n", "<leader>s", ":w<CR>", opts)
@@ -543,9 +543,9 @@ bind("n", "gh", ":Gitsigns preview_hunk<CR>", opts)
 bind("n", "gs", ":Gitsigns next_hunk<CR>", opts)
 bind("n", "gw", ":Gitsigns prev_hunk<CR>", opts)
 bind("n", "gR", ":Gitsigns reset_hunk<CR>", opts)
-bind("n", "git", ":Git<CR>", opts)
+bind("n", "git", ":Git", opts)
 
 -- Various settings
 vim.opt.relativenumber = true
-vim.opt.signcolumn = 'yes:1'
+vim.opt.signcolumn = 'yes:2'
 vim.opt.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
