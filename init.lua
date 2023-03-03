@@ -119,21 +119,17 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    -- config = function()
-    --   vim.cmd.colorscheme 'onedark'
-    -- end,
-  },
-
-  -- {
-  --   'catppuccin/nvim',
+  -- { -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
   --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'catppuccin-macchiato'
-  --   end,
+  --   -- config = function()
+  --   --   vim.cmd.colorscheme 'onedark'
+  --   -- end,
   -- },
+
+  {
+    'catppuccin/nvim',
+  },
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -141,7 +137,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'catppuccin',
         component_separators = { left = '', right = ''},
         section_separators = { left = '', right = ''},
       },
@@ -208,10 +204,15 @@ require('lazy').setup({
 
 require "lsp_signature".setup({})
 
-require('onedark').setup {
-  style = 'deep',
+-- require('onedark').setup {
+--   style = 'deep',
+-- }
+-- require('onedark').load()
+
+require('catppuccin').setup {
+  flavour = 'frappe'
 }
-require('onedark').load()
+vim.cmd.colorscheme "catppuccin"
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
