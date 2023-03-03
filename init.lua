@@ -202,7 +202,9 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
-require "lsp_signature".setup({})
+require "lsp_signature".setup({
+  hint_enable = false,
+})
 
 -- require('onedark').setup {
 --   style = 'deep',
