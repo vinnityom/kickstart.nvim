@@ -141,6 +141,14 @@ require('lazy').setup({
         component_separators = { left = '', right = ''},
         section_separators = { left = '', right = ''},
       },
+      sections = {
+        lualine_c = {
+          {
+            'filename',
+            path = 1,
+          }
+        },
+      },
     },
   },
 
@@ -212,7 +220,7 @@ require "lsp_signature".setup({
 -- require('onedark').load()
 
 require('catppuccin').setup {
-  flavour = 'frappe'
+  flavour = 'mocha'
 }
 vim.cmd.colorscheme "catppuccin"
 
@@ -555,6 +563,10 @@ bind("n", "gs", ":Gitsigns next_hunk<CR>", opts)
 bind("n", "gw", ":Gitsigns prev_hunk<CR>", opts)
 bind("n", "gR", ":Gitsigns reset_hunk<CR>", opts)
 bind("n", "git", ":Git", opts)
+
+-- Filepath
+bind("n", "<leader>cfp", ":let @+ = expand('%:p')<cr>", { silent = true, noremap = true, desc = 'Copy full file path' })
+bind("n", "<leader>crp", ":let @+ = expand('%')<cr>", { silent = true, noremap = true, desc = 'Copy relative file path' })
 
 -- Various settings
 vim.opt.relativenumber = true
