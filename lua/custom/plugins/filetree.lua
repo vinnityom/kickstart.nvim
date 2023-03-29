@@ -20,7 +20,7 @@ return {
         {text = "", texthl = "DiagnosticSignHint"})
 
     require('neo-tree').setup {
-      close_if_last_window = true,
+      -- close_if_last_window = true,
       default_component_configs = {
         git_status = {
           symbols = {
@@ -37,6 +37,11 @@ return {
             conflict  = "",
           }
         },
+      },
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        }
       },
       window = {
         width = 50,
