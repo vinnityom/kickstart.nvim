@@ -35,7 +35,6 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -80,7 +79,8 @@ require('lazy').setup({
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -91,21 +91,23 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  { 'folke/which-key.nvim',          opts = {} },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -133,7 +135,8 @@ require('lazy').setup({
     'catppuccin/nvim',
   },
 
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -153,7 +156,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
@@ -164,7 +168,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -182,7 +186,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -236,20 +241,10 @@ require('catppuccin').setup {
   -- flavour = 'mocha'
   flavour = 'latte',
   dim_inactive = {
-      enabled = true,
-      shade = "dark",
-      percentage = 0.15,
+    enabled = true,
+    shade = "dark",
+    percentage = 0.15,
   },
-  color_overrides = {
-      latte = {
-          -- base = "#eff1f5",
-          -- mantle = "#242424",
-          -- crust = "#474747",
-      },
-      frappe = {},
-      macchiato = {},
-      mocha = {},
-  }
 }
 vim.cmd.colorscheme "catppuccin"
 
@@ -532,7 +527,7 @@ cmp.setup {
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-k>'] = cmp.mapping.select_prev_item(),
 
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
@@ -551,8 +546,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -585,10 +580,12 @@ bind("n", "[<leader>", "<S-o><ESC>j", { silent = true, noremap = true, desc = 'M
 bind("n", "<leader>s", ":w<CR>", opts)
 
 -- Git
-bind("n", "gh", ":Gitsigns preview_hunk<CR>", opts)
-bind("n", "gs", ":Gitsigns next_hunk<CR>", opts)
-bind("n", "gw", ":Gitsigns prev_hunk<CR>", opts)
-bind("n", "gR", ":Gitsigns reset_hunk<CR>", opts)
+local gs = package.loaded.gitsigns
+
+bind("n", "gh", function() gs.preview_hunk() end, opts)
+bind("n", "gs", function() gs.next_hunk() end, opts)
+bind("n", "gw", function() gs.prev_hunk() end, opts)
+bind("n", "gR", function() gs.reset_hunk() end, opts)
 bind("n", "git", ":Git", opts)
 
 -- Filepath
