@@ -73,8 +73,10 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- Signature help 
+  -- Signature help
   "ray-x/lsp_signature.nvim",
+
+  "jose-elias-alvarez/null-ls.nvim",
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -115,7 +117,7 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-      sign_priority=100,
+      sign_priority = 100,
     },
   },
 
@@ -137,9 +139,8 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'catppuccin',
-        component_separators = { left = '', right = ''},
-        section_separators = { left = '', right = ''},
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_c = {
@@ -214,13 +215,43 @@ require "lsp_signature".setup({
   hint_enable = false,
 })
 
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  debug = true,
+  sources = {
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.code_actions.refactoring,
+    null_ls.builtins.diagnostics.stylelint,
+    null_ls.builtins.formatting.stylelint,
+  },
+})
+
+vim.keymap.set('n', 'ff', '<cmd>lua vim.lsp.buf.format({ async = true })<cr>', { silent = true, desc = '[F]ormat file' })
+
 -- require('onedark').setup {
 --   style = 'deep',
 -- }
 -- require('onedark').load()
 
 require('catppuccin').setup {
-  flavour = 'mocha'
+  -- flavour = 'mocha'
+  flavour = 'latte',
+  dim_inactive = {
+      enabled = true,
+      shade = "dark",
+      percentage = 0.15,
+  },
+  color_overrides = {
+      latte = {
+          -- base = "#eff1f5",
+          -- mantle = "#242424",
+          -- crust = "#474747",
+      },
+      frappe = {},
+      macchiato = {},
+      mocha = {},
+  }
 }
 vim.cmd.colorscheme "catppuccin"
 
@@ -322,7 +353,8 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>g', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>b', function() return require('telescope.builtin').buffers({ sort_lastused = true }) end, { desc = 'Show open [B]uffers' })
+vim.keymap.set('n', '<leader>b', function() return require('telescope.builtin').buffers({ sort_lastused = true }) end,
+  { desc = 'Show open [B]uffers' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -505,7 +537,7 @@ cmp.setup {
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-k>'] = cmp.mapping.select_prev_item(),
 
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
@@ -524,8 +556,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
@@ -571,4 +603,10 @@ bind("n", "<leader>crp", ":let @+ = expand('%')<cr>", { silent = true, noremap =
 -- Various settings
 vim.opt.relativenumber = true
 vim.opt.signcolumn = 'yes:2'
-vim.opt.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+vim.opt.langmap =
+'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+
+vim.opt.cursorline = true
+
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
